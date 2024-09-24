@@ -12,10 +12,14 @@ Grin wallets are Hierarchically Deterministic (HD) wallets that use the BIP32 st
 This tool allows you to use any input string to replace that entropy that is sha256 hashed to create the entropy for a wallet. Any string that a human can think of is much less random than a regular 12 word mnemonic and is ill adviced to be used for main wallets. If you want to read more about Grin HD wallets, read this [[REF](https://anynomouss.github.io/grin-for-muggles/grin_for_muggles_and_aspiring_wizards.html)]
 
 
- 1. normal wallets: *seed_phrase (12-24 words) -> HD wallet*<br>
- 2. bip39 password protected wallet: *seed_phrase (12-24 words) ->  seed_entropy + password (2000 rounds of additional sha512) -> final entropy-> HD wallet*<br>
- 3. vaucher wallets: *seed_phrase (15 words) -> HD wallet*<br>
- 4. brain-bip39 password protected wallets: *password as seed (hex encode then sha256) -> seed_entropy + password (2000 rounds of additional sha512) -> final entropy-> HD wallet*<br>
+ 1. normal wallets: <br>
+    *seed_phrase (12-24 words) -> HD wallet*<br>
+ 2. bip39 password protected wallet: <br>
+    *seed_phrase (12-24 words) ->  seed_entropy + password (2000 rounds of additional sha512) -> final entropy-> HD wallet*<br>
+ 3. vaucher wallets: <br>
+    *seed_phrase (15 words) -> HD wallet*<br>
+ 4. brain-bip39 password protected wallets: <br>
+    *password as seed (hex encode then sha256) -> seed_entropy + password (2000 rounds of additional sha512) -> final entropy-> HD wallet*<br>
 
 
 ## EXAMPLE USE CASES
