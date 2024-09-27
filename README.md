@@ -1,10 +1,10 @@
 # grin-wallet-tool:old_key:<br>
 Grin-wallet-tool is a Python command line tool that can be used to a) generate new wallets, b) load  existing wallets and c) *load* or *swipe* grin funds to or from  a wallet or voucher using the grin-wallet API. 
 **Supported wallet types:**
- 1. regular wallets
- 2. bip39 password protected wallets
- 3. voucher wallets
- 4. brain-bip39 password protected wallets
+ 1. regular-wallet
+ 2. bip39-password-wallet
+ 3. voucher-wallet
+ 4. brain-bip39-wallet
 
  This tool is designed for advanced users who know how to use the command line and are familiar with the concept of [BIP39 wallets with extra password](https://bitcoin.stackexchange.com/questions/120215/how-is-an-hd-wallet-key-generated) and brain wallets, and entropy. In particular brain-wallets require a good understanding of their inherent risks.
 
@@ -68,7 +68,12 @@ python grin-wallet-tool.py --load=True --wallet-type="brain-bip39-wallet" secret
 He uses the last 8 words of the first sentence of his favorit book as first secret and uses his phone numer as second secret to generate his main wallet. He knows that this combination of two long secrets is reasonably secure and easy to remember without needing a physical backup but understands it is still less secure than a randomly generated wallet with a mnemonic.
 
 ### Why use BIP39 wallets?
-**Example 4:** Charlie played with brain wallets and realised that by using a random seed for the entropy together with a BIP39 password, he can generate a truly safe wallet backup since the seed cannot be guessed.  
+**Example 4:** Charlie played with brain wallets and realised that by using a random seed for the entropy together with a BIP39 password, he can generate a truly safe wallet backup since the seed cannot be guessed. He generates an output wallet file:
+ ```nocolor
+python grin-wallet-tool.py --load=1000 --wallet-type="bip39-wallet" bip39-password="proteG0"  
+wallet-file="bip39password_protected_wallet.json" 
+ ```
+
 **Example 5:** 
 For security he keeps two backup of the mnemonic, one in his house, one hidden in his parents house. Even when a burgler breaks into his hous and finds the mnemonic, the thief will need expert help to recover the BIP39 password which takes time and expertise. Long before the thief can access his funds, Charlie recovers the wallet using the second backup at his parents place together with his BIP39 password and sends the funds to a new wallet. 
 **Example 6:** 
@@ -83,7 +88,7 @@ The resulting voucher wallets will be stored on the NFT chip and optionally prin
 ## Alice:
  ```nocolor
 ## Tom:  
-python grin-wallet-tool.py --new=True --deposit=100 --wallet-type="voucher-wallet* output-qr-file="birthday-QR-code" 
+python grin-wallet-tool.py --new=True --deposit=100 --wallet-type="voucher-wallet" qr-file="birthday-QR-code.png" 
 ## Harry:
-python grin-wallet-tool.py --load=True --swipe=True --wallet-type="voucher-wallet"  *qr-file="birthday-QR-code"*
+python grin-wallet-tool.py --load=True --swipe=True --wallet-type="voucher-wallet"  *qr-file="birthday-QR-code.png"*
  ```
