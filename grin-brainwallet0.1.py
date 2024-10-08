@@ -6,7 +6,7 @@ Dislaimer: Software is provided as it without any warranty. Use at your own risk
 WARNINGs: 
     -The use of brain wallets is inherently insecure since humans are
     not a good source of entropy.   
-    -rain wallet with BI39 passwords are slightly more secure thanks to 20048 rounds of HMAC-SHA512 key stretching and hardening.
+    -brain wallet are made more secure thanks to 20480 rounds of HMAC-SHA512 for seed and the regular 2048 HMAC-SHA512 key stretching and hardening when going from seed to master key (bip39).
      but still can he brute forced at a high speed (TODO, test speed for bruteforcing).
     -This tool is best used in a secure environment 
     -Always keep a backup of the software you use to generate wallets
@@ -98,12 +98,13 @@ from grinmw.wallet_v3 import WalletV3
 from pathlib import Path
 
 def brain_wallet_bi39(secret1,secret2):
-    bip39passphrase = secret2
     mnemo =  Mnemonic("english")
-    entropy = binascii.hexlify(secret1.encode('utf-16'))
-    seed_bytes=entropy=hashlib.sha256(entropy.encode('utf-16')).digest()
-    mnemonic = mnemo.to_mnemonic(entropy)
-    master_seed = mnemo.to_seed(mnemonic, bip39passphrase.encode('utf-16').strip())
+    entropy = passphrase
+    salt =  bytes(salt.encode(encoding))
+    passphrase = bytes(passphrase.encode(encoding))
+    seed_bytes = hashlib.pbkdf2_hmac('sha256',passphrase, salt,iterations=PBKDF2_ROUNDS_SEED)
+    mnemonic = mnemo.to_mnemonic(seed_bytes)
+    master_seed = mnemo.to_seed(mnemonic, bip39passphrase.strip())
     w = Wallet(master_seed=master_seed)
     ##
     # instantiate the wallet
@@ -119,8 +120,10 @@ def brain_wallet_bi39(secret1,secret2):
 def brain_wallet_two_secrets(passphrase,bip39_passphrasse):
     mnemo =  Mnemonic("english")
     entropy = passphrase
-    seed_bytes=entropy=hashlib.sha256(entropy.encode('utf-16')).digest()
-    mnemonic = mnemo.to_mnemonic(entropy)
+    salt =  bytes(salt.encode(encoding))
+    passphrase = bytes(passphrase.encode(encoding))
+    seed_bytes = hashlib.pbkdf2_hmac('sha256',passphrase, salt,iterations=PBKDF2_ROUNDS_SEED)
+    mnemonic = mnemo.to_mnemonic(seed_bytes)
     master_seed = mnemo.to_seed(mnemonic, bip39passphrase.strip())
     w = Wallet(master_seed=master_seed)
     ##
@@ -163,6 +166,10 @@ def input_arguments_sanity_check(argumentss):
 
 if __name__ == '__main__':
     
+    ## Global parameters
+    salt = 'mimblewimble' # salt only used for brainwallet entropy
+    PBKDF2_ROUNDS_SEED = 20480
+    encoding = 'ascii'
     
     ###########################################################################
     ## 0) Parse command line argument, check valid combinations of arguments 
@@ -195,6 +202,7 @@ if __name__ == '__main__':
     ## Extra options
     parser.add_argument("--secure", help = "Example: --secure=True", required = False, default = False, type=bool)
     parser.add_argument("--language", help = "Example: --language=korean", required = False, default = English, type=str)
+    parser.add_argument("--encodinge", help = "Example: --encoding='utf-16'", required = False, default = 'ascii', type=str)
     ###############################################################################
     
     
