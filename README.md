@@ -1,5 +1,5 @@
 # grin-wallet-tool:old_key:<br>
-Grin-wallet-tool is a Python command line tool that can be used to a) generate new wallets, b) load  existing wallets and c) *load* or *swipe* grin funds to or from  a wallet or voucher using the grin-wallet API. 
+Grin-wallet-tool is a Python command line tool that can be used to a) generate new wallets, b) load  existing wallets and c)perform wallet operations such as *load* or *swipe* funds to or from  a wallet. 
 **Supported wallet types:**
  1. regular-wallet
  2. bip39-password-wallet
